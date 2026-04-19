@@ -1,0 +1,5 @@
+C:\Users\kcee1\source\repos\ColdNightmareDreams\ColdNightmareDreams\bin\Release\net10.0\app.publish\ColdNightmareDreams.exe
+C:\Users\kcee1\source\repos\ColdNightmareDreams\ColdNightmareDreams\bin\Release\net10.0\app.publish\ColdNightmareDreams.dll
+C:\Users\kcee1\source\repos\ColdNightmareDreams\ColdNightmareDreams\bin\Release\net10.0\app.publish\ColdNightmareDreams.deps.json
+C:\Users\kcee1\source\repos\ColdNightmareDreams\ColdNightmareDreams\bin\Release\net10.0\app.publish\ColdNightmareDreams.runtimeconfig.json
+C:\Users\kcee1\source\repos\ColdNightmareDreams\ColdNightmareDreams\bin\Release\net10.0\app.publish\ColdNightmareDreams.pdb
