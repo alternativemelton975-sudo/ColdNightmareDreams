@@ -9,199 +9,216 @@ var chapters = new List<(string Title, string Content)>
 {
     (
         "Chapter 1 - The Frozen Yard",
-        """
-        Pyrix awoke beneath a dead oak tree in Ghost Yard.
+        @"Pyrix awoke beneath a dead oak tree in Ghost Yard.
 
-        Snow drifted from a sky without stars.
+Snow drifted from a sky without stars.
 
-        A black crow watched from above.
+A black crow watched from above.
 
-        "You're late," the crow said.
+""You're late,"" the crow said.
 
-        Pyrix stepped back.
+Pyrix stepped back.
 
-        "Late for what?"
+""Late for what?""
 
-        The crow spread its wings.
+The crow spread its wings.
 
-        "The end."
-        """
+""The end."""
     ),
 
     (
         "Chapter 2 - Whispering Frost",
-        """
-        Every frozen house contained shadows.
+        @"Every frozen house contained shadows.
 
-        The shadows whispered memories.
+The shadows whispered memories.
 
-        As Pyrix walked through the village, a voice spoke:
+As Pyrix walked through the village, a voice spoke:
 
-        'Don't let the cold take your name.'
+'Don't let the cold take your name.'
 
-        Somewhere beyond Ghost Yard,
-        something ancient was waking.
-        """
+Somewhere beyond Ghost Yard,
+something ancient was waking."
     ),
 
     (
         "Chapter 3 - The Hollow Bell",
-        """
-        Beneath the cemetery stood an ancient bell tower.
+        @"Deep beneath the cemetery stood a rusted bell tower.
 
-        Every midnight the bell rang.
+No rope swung from the ancient bell.
 
-        No rope.
+No wind touched its surface.
 
-        No wind.
+Yet every midnight it rang.
 
-        Yet the sound echoed across the valley.
+The crow refused to enter the tower.
 
-        The crow refused to enter.
-        """
+Pyrix climbed alone."
     ),
 
     (
         "Chapter 4 - The Nameless King",
-        """
-        The stories were true.
+        @"The stories were true.
 
-        Beneath the frozen earth slept
-        the Nameless King.
+Beneath the frozen earth slept
+the Nameless King.
 
-        He fed on forgotten memories.
+He fed upon forgotten memories.
 
-        Every winter he grew stronger.
-        """
+Every winter he grew stronger."
     ),
 
     (
         "Chapter 5 - The Crow's Secret",
-        """
-        The crow revealed its true name.
+        @"The crow finally revealed its true name.
 
-        Mournwing.
+Mournwing.
 
-        For centuries it guarded the prison
-        beneath Ghost Yard.
+For centuries it guarded the prison
+beneath Ghost Yard.
 
-        The cold was not weather.
+The cold was not weather.
 
-        It was the breath of the king.
-        """
+It was the breath of the king."
     ),
 
     (
-        "Chapter 6 - The Ice Caves",
-        """
-        Blue crystal caves stretched deep beneath
-        the mountains.
+        "Chapter 6 - The Crystal Caves",
+        @"The caves glowed blue beneath the mountains.
 
-        Inside every crystal floated a memory.
+Every crystal held a memory.
 
-        Entire lives had been stolen.
-        """
+Entire lives were trapped there.
+
+Families.
+
+Friends.
+
+Dreams."
     ),
 
     (
         "Chapter 7 - The Heart Light",
-        """
-        At the center of the cave stood
-        an ancient lantern.
+        @"At the center of the caves stood a lantern.
 
-        Its flame never died.
+Its flame had burned for centuries.
 
-        Mournwing called it the Heart Light.
+Only the Heart Light could weaken
+the Nameless King.
 
-        Only the Heart Light could stop
-        the Nameless King.
-        """
+But every use required sacrifice."
     ),
 
     (
-        "Chapter 8 - The Battle",
-        """
-        The frozen throne cracked.
+        "Chapter 8 - Frozen Giants",
+        @"Ancient giants slept beneath the ice.
 
-        Ice exploded across the cavern.
+When the king stirred,
+so did they.
 
-        The Nameless King opened his eyes.
+Entire mountains began to move.
 
-        Darkness poured through the chamber.
-
-        The final battle had begun.
-        """
+Ghost Yard trembled."
     ),
 
     (
-        "Chapter 9 - Sacrifice",
-        """
-        The lantern demanded a price.
+        "Chapter 9 - The Memory Gate",
+        @"A gate of silver frost appeared.
 
-        A memory.
+Beyond it lay every stolen memory.
 
-        Not just any memory.
+Pyrix walked carefully.
 
-        The memory Pyrix treasured most.
-
-        To save the world,
-        he would lose part of himself forever.
-        """
+Thousands of voices called his name."
     ),
 
     (
-        "Chapter 10 - Dawn Over Ghost Yard",
-        """
-        The darkness faded.
+        "Chapter 10 - The Battle Begins",
+        @"The frozen throne cracked.
 
-        Snow began to melt.
+Ice exploded through the cavern.
 
-        Sunlight returned for the first time
-        in generations.
+The Nameless King opened his eyes.
 
-        The people of Ghost Yard were saved.
+Darkness poured out like smoke.
 
-        Yet nobody remembered the hero
-        who rescued them.
+The final battle had begun."
+    ),
 
-        Pyrix smiled anyway.
-        """
+    (
+        "Chapter 11 - The Sacrifice",
+        @"The Heart Light demanded payment.
+
+Not gold.
+
+Not blood.
+
+A precious memory.
+
+One Pyrix would never recover."
+    ),
+
+    (
+        "Chapter 12 - Dawn Over Ghost Yard",
+        @"The darkness faded.
+
+The snow began to melt.
+
+Sunlight returned.
+
+The people celebrated.
+
+Yet nobody remembered the hero
+who saved them.
+
+Pyrix smiled anyway."
     )
 };
 
 app.MapGet("/", () =>
 {
-    var html = """
+    string html = @"
     <html>
     <head>
         <title>Cold Nightmare Dreams</title>
         <style>
-            body{
+            body {
                 background:#0d1117;
                 color:white;
-                font-family:Arial;
+                font-family:Arial, sans-serif;
                 max-width:900px;
                 margin:auto;
                 padding:30px;
             }
-            a{
+
+            h1 {
                 color:#58a6ff;
+            }
+
+            a {
                 display:block;
+                color:#58a6ff;
                 margin:10px 0;
+                text-decoration:none;
+            }
+
+            a:hover {
+                text-decoration:underline;
             }
         </style>
     </head>
     <body>
         <h1>Cold Nightmare Dreams</h1>
-        <p>Interactive Horror Fantasy Story</p>
-    """;
+        <p>A dark fantasy adventure following Pyrix and Mournwing through Ghost Yard.</p>";
 
     for (int i = 0; i < chapters.Count; i++)
     {
-        html += $"<a href='/chapter/{i}'>{chapters[i].Title}</a>";
+        html += $"<a href='/chapter/{i}'>" +
+                $"{chapters[i].Title}</a>";
     }
 
-    html += "</body></html>";
+    html += @"
+    </body>
+    </html>";
 
     return Results.Content(html, "text/html");
 });
@@ -213,15 +230,16 @@ app.MapGet("/chapter/{id:int}", (int id) =>
 
     var chapter = chapters[id];
 
-    var prev = id > 0
-        ? $"<a href='/chapter/{id - 1}'>Previous</a>"
-        : "";
+    string prevLink = "";
+    string nextLink = "";
 
-    var next = id < chapters.Count - 1
-        ? $"<a href='/chapter/{id + 1}'>Next</a>"
-        : "";
+    if (id > 0)
+        prevLink = $"<a href='/chapter/{id - 1}'>⬅ Previous</a>";
 
-    return Results.Content($"""
+    if (id < chapters.Count - 1)
+        nextLink = $"<a href='/chapter/{id + 1}'>Next ➡</a>";
+
+    string html = $@"
     <html>
     <head>
         <title>{chapter.Title}</title>
@@ -229,37 +247,45 @@ app.MapGet("/chapter/{id:int}", (int id) =>
             body {{
                 background:#0d1117;
                 color:white;
-                font-family:Arial;
+                font-family:Arial, sans-serif;
                 max-width:900px;
                 margin:auto;
                 padding:30px;
             }}
 
-            .nav {{
-                margin-top:20px;
+            h1 {{
+                color:#58a6ff;
             }}
 
             a {{
                 color:#58a6ff;
                 margin-right:20px;
+                text-decoration:none;
+            }}
+
+            pre {{
+                white-space:pre-wrap;
+                font-size:18px;
+                line-height:1.6;
             }}
         </style>
     </head>
     <body>
+
         <h1>{chapter.Title}</h1>
 
-        <pre style="white-space:pre-wrap;font-size:18px;">
-{chapter.Content}
-        </pre>
+        <pre>{chapter.Content}</pre>
 
-        <div class="nav">
-            {prev}
-            {next}
-            <a href="/">Contents</a>
-        </div>
+        <hr>
+
+        {prevLink}
+        {nextLink}
+        <a href='/'>Contents</a>
+
     </body>
-    </html>
-    """, "text/html");
+    </html>";
+
+    return Results.Content(html, "text/html");
 });
 
 app.Run();
