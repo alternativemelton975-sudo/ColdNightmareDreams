@@ -10,6 +10,5 @@ FROM mcr.microsoft.com/dotnet/runtime:8.0
 WORKDIR /app
 
 COPY --from=build /app/publish .
-COPY Chapters ./Chapters
 
 ENTRYPOINT ["dotnet", "ColdNightmareDreams.dll"]
