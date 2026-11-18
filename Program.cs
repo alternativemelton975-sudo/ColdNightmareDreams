@@ -1,193 +1,265 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Hosting;
 
-class StoryRunner
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+var chapters = new List<(string Title, string Content)>
 {
-    private readonly List<string> _ChaptersPath = new List<string>();
-    private int _index = 0;
+    (
+        "Chapter 1 - The Frozen Yard",
+        """
+        Pyrix awoke beneath a dead oak tree in Ghost Yard.
 
-    public StoryRunner(string ChaptersDirectory)
-    {
-        if (!Directory.Exists(ChaptersDirectory))
-            throw new DirectoryNotFoundException(ChaptersDirectory);
+        Snow drifted from a sky without stars.
 
-        foreach (var file in Directory.GetFiles(ChaptersDirectory, "Chapter*.txt"))
-        {
-            _ChaptersPath.Add(file);
-            Console.WriteLine($"Added chapter file: {file}");
-        }
+        A black crow watched from above.
 
-        // FIX: Sort chapters numerically instead of alphabetically
-        _ChaptersPath.Sort((a, b) =>
-        {
-            int ExtractNumber(string path)
-            {
-                var name = Path.GetFileNameWithoutExtension(path);
-                var parts = name.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                return int.TryParse(parts[^1], out var n) ? n : int.MaxValue;
-            }
+        "You're late," the crow said.
 
-            return ExtractNumber(a).CompareTo(ExtractNumber(b));
-        });
+        Pyrix stepped back.
 
-        if (_ChaptersPath.Count == 0)
-            throw new InvalidOperationException("No story chapters found in directory: " + ChaptersDirectory);
-    }
+        "Late for what?"
 
-    public void Run()
-    {
-        PrintCurrentTitle();
-        while (true)
-        {
-            Console.Write("> ");
-            var input = Console.ReadLine()?.Trim();
-            if (string.IsNullOrEmpty(input))
-                continue;
+        The crow spread its wings.
 
-            var parts = input.Split(' ', 2, StringSplitOptions.RemoveEmptyEntries);
-            var cmd = parts[0].ToLowerInvariant();
-            var arg = parts.Length > 1 ? parts[1].Trim() : string.Empty;
+        "The end."
+        """
+    ),
 
-            switch (cmd)
-            {
-                case "next":
-                case "n":
-                    if (_index < _ChaptersPath.Count - 1) _index++;
-                    PrintCurrentTitle();
-                    break;
+    (
+        "Chapter 2 - Whispering Frost",
+        """
+        Every frozen house contained shadows.
 
-                case "prev":
-                case "p":
-                    if (_index > 0) _index--;
-                    PrintCurrentTitle();
-                    break;
+        The shadows whispered memories.
 
-                case "goto":
-                case "g":
-                    if (string.IsNullOrWhiteSpace(arg))
-                    {
-                        Console.WriteLine("Usage: goto <number>");
-                        break;
-                    }
+        As Pyrix walked through the village, a voice spoke:
 
-                    if (int.TryParse(arg, out var num) && num >= 1 && num <= _ChaptersPath.Count)
-                    {
-                        _index = num - 1;
-                        PrintCurrentTitle();
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid chapter number. Use 'list' to see available chapters.");
-                    }
-                    break;
+        'Don't let the cold take your name.'
 
-                case "list":
-                    for (var i = 0; i < _ChaptersPath.Count; i++)
-                        Console.WriteLine($"{i + 1}. {Path.GetFileNameWithoutExtension(_ChaptersPath[i])}");
-                    break;
+        Somewhere beyond Ghost Yard,
+        something ancient was waking.
+        """
+    ),
 
-                case "read":
-                case "r":
-                    PrintCurrentFull();
-                    break;
+    (
+        "Chapter 3 - The Hollow Bell",
+        """
+        Beneath the cemetery stood an ancient bell tower.
 
-                case "help":
-                    Console.WriteLine("Commands: next (n), prev (p), goto (g) <num>, list, read (r), help, quit (q)");
-                    break;
+        Every midnight the bell rang.
 
-                case "quit":
-                case "q":
-                    Console.WriteLine("Goodbye.");
-                    return;
+        No rope.
 
-                default:
-                    Console.WriteLine("Unknown command. Type 'help' for commands.");
-                    break;
-            }
-        }
-    }
+        No wind.
 
-    private void PrintCurrentTitle()
-    {
-        var name = Path.GetFileNameWithoutExtension(_ChaptersPath[_index]);
-        Console.WriteLine();
-        Console.WriteLine($"Chapter {_index + 1}/{_ChaptersPath.Count}: {name}");
-        Console.WriteLine("Type 'read' to read this chapter or 'list' to see all chapters.");
-        Console.WriteLine();
-    }
+        Yet the sound echoed across the valley.
 
-    private void PrintCurrentFull()
-    {
-        Console.WriteLine();
-        var content = File.ReadAllText(_ChaptersPath[_index]);
-        Console.WriteLine(content);
-        Console.WriteLine();
-    }
-}
+        The crow refused to enter.
+        """
+    ),
 
-class Program
+    (
+        "Chapter 4 - The Nameless King",
+        """
+        The stories were true.
+
+        Beneath the frozen earth slept
+        the Nameless King.
+
+        He fed on forgotten memories.
+
+        Every winter he grew stronger.
+        """
+    ),
+
+    (
+        "Chapter 5 - The Crow's Secret",
+        """
+        The crow revealed its true name.
+
+        Mournwing.
+
+        For centuries it guarded the prison
+        beneath Ghost Yard.
+
+        The cold was not weather.
+
+        It was the breath of the king.
+        """
+    ),
+
+    (
+        "Chapter 6 - The Ice Caves",
+        """
+        Blue crystal caves stretched deep beneath
+        the mountains.
+
+        Inside every crystal floated a memory.
+
+        Entire lives had been stolen.
+        """
+    ),
+
+    (
+        "Chapter 7 - The Heart Light",
+        """
+        At the center of the cave stood
+        an ancient lantern.
+
+        Its flame never died.
+
+        Mournwing called it the Heart Light.
+
+        Only the Heart Light could stop
+        the Nameless King.
+        """
+    ),
+
+    (
+        "Chapter 8 - The Battle",
+        """
+        The frozen throne cracked.
+
+        Ice exploded across the cavern.
+
+        The Nameless King opened his eyes.
+
+        Darkness poured through the chamber.
+
+        The final battle had begun.
+        """
+    ),
+
+    (
+        "Chapter 9 - Sacrifice",
+        """
+        The lantern demanded a price.
+
+        A memory.
+
+        Not just any memory.
+
+        The memory Pyrix treasured most.
+
+        To save the world,
+        he would lose part of himself forever.
+        """
+    ),
+
+    (
+        "Chapter 10 - Dawn Over Ghost Yard",
+        """
+        The darkness faded.
+
+        Snow began to melt.
+
+        Sunlight returned for the first time
+        in generations.
+
+        The people of Ghost Yard were saved.
+
+        Yet nobody remembered the hero
+        who rescued them.
+
+        Pyrix smiled anyway.
+        """
+    )
+};
+
+app.MapGet("/", () =>
 {
-    static void Main()
-    {
-        var chaptersDir = LocateChaptersDirectory();
-        if (chaptersDir == null)
-        {
-            Console.WriteLine("Chapters directory not found. Creating temporary Chapters set for debugging.");
-            chaptersDir = CreateTemporaryChapters();
-        }
-
-        try
-        {
-            var runner = new StoryRunner(chaptersDir);
-            Console.WriteLine("Cold Nightmare — Interactive Story (chronological)");
-            Console.WriteLine("Type 'help' for commands.");
-            runner.Run();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Error: " + ex.Message);
-        }
-    }
-
-    private static string LocateChaptersDirectory()
-    {
-        var starts = new[] { AppDomain.CurrentDomain.BaseDirectory, Directory.GetCurrentDirectory() };
-        foreach (var start in starts)
-        {
-            var dir = start;
-            for (int i = 0; i < 10 && dir != null; i++)
-            {
-                var candidate = Path.Combine(dir, "Chapters");
-                if (Directory.Exists(candidate))
-                    return candidate;
-
-                dir = Directory.GetParent(dir)?.FullName;
+    var html = """
+    <html>
+    <head>
+        <title>Cold Nightmare Dreams</title>
+        <style>
+            body{
+                background:#0d1117;
+                color:white;
+                font-family:Arial;
+                max-width:900px;
+                margin:auto;
+                padding:30px;
             }
-        }
-        return null;
-    }
+            a{
+                color:#58a6ff;
+                display:block;
+                margin:10px 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Cold Nightmare Dreams</h1>
+        <p>Interactive Horror Fantasy Story</p>
+    """;
 
-    private static string CreateTemporaryChapters()
+    for (int i = 0; i < chapters.Count; i++)
     {
-        var tempDir = Path.Combine(Path.GetTempPath(), "ColdNightmare_Chapters_" + Guid.NewGuid().ToString("N"));
-        Directory.CreateDirectory(tempDir);
-
-        File.WriteAllText(Path.Combine(tempDir, "Chapter 1.txt"),
-            "Chapter 1 — Introduction\n\nWaking up in Ghost Yard, Pyrix feels the cold bite through his bones.\n");
-
-        File.WriteAllText(Path.Combine(tempDir, "Chapter 2.txt"),
-            "Chapter 2 — The Problem\n\nA relentless cold steals the voice of the living.\n");
-
-        File.WriteAllText(Path.Combine(tempDir, "Chapter 3.txt"),
-            "Chapter 3 — The Quest\n\nPyrix journeys across Ghost Yard seeking answers.\n");
-
-        File.WriteAllText(Path.Combine(tempDir, "Chapter 4.txt"),
-            "Chapter 4 — The Revelation\n\nThe crow is both guardian and guide.\n");
-
-        File.WriteAllText(Path.Combine(tempDir, "Chapter 5.txt"),
-            "Chapter 5 — The Resolution\n\nPyrix builds a small light to keep nightmares at bay.\n");
-
-        return tempDir;
+        html += $"<a href='/chapter/{i}'>{chapters[i].Title}</a>";
     }
-}
+
+    html += "</body></html>";
+
+    return Results.Content(html, "text/html");
+});
+
+app.MapGet("/chapter/{id:int}", (int id) =>
+{
+    if (id < 0 || id >= chapters.Count)
+        return Results.NotFound();
+
+    var chapter = chapters[id];
+
+    var prev = id > 0
+        ? $"<a href='/chapter/{id - 1}'>Previous</a>"
+        : "";
+
+    var next = id < chapters.Count - 1
+        ? $"<a href='/chapter/{id + 1}'>Next</a>"
+        : "";
+
+    return Results.Content($"""
+    <html>
+    <head>
+        <title>{chapter.Title}</title>
+        <style>
+            body {{
+                background:#0d1117;
+                color:white;
+                font-family:Arial;
+                max-width:900px;
+                margin:auto;
+                padding:30px;
+            }}
+
+            .nav {{
+                margin-top:20px;
+            }}
+
+            a {{
+                color:#58a6ff;
+                margin-right:20px;
+            }}
+        </style>
+    </head>
+    <body>
+        <h1>{chapter.Title}</h1>
+
+        <pre style="white-space:pre-wrap;font-size:18px;">
+{chapter.Content}
+        </pre>
+
+        <div class="nav">
+            {prev}
+            {next}
+            <a href="/">Contents</a>
+        </div>
+    </body>
+    </html>
+    """, "text/html");
+});
+
+app.Run();
